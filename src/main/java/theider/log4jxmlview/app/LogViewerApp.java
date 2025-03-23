@@ -2,11 +2,12 @@ package theider.log4jxmlview.app;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.SwingUtilities;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import theider.log4jxmlview.Log4jXmlReader;
+import theider.log4jxmlview.logrecord.LogRecordFileReader;
 
 @SpringBootApplication
 public class LogViewerApp {
@@ -16,19 +17,19 @@ public class LogViewerApp {
     }
 
     @Bean
-    public CommandLineRunner run(Log4jXmlReader reader) {
+    public CommandLineRunner run(LogRecordFileReader reader) {
         return args -> {
             if (GraphicsEnvironment.isHeadless()) {
                 System.err.println("Cannot launch UI: running in headless mode");
             } else {
-                SwingUtilities.invokeLater(() -> new LogViewerFrame(reader).setVisible(true));
+                SwingUtilities.invokeLater(() -> new LogViewerFrame().setVisible(true));
             }
 
         };
     }
 
     @Bean
-    public Log4jXmlReader log4jXmlReader() {
-        return new Log4jXmlReader();
+    public LogRecordFileReader log4jXmlReader() {
+        return new LogRecordFileReader();
     }
 }

@@ -7,7 +7,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import theider.log4jxmlview.logrecord.LogRecordFileReader;
 
 @SpringBootApplication
 public class LogViewerApp {
@@ -17,7 +16,7 @@ public class LogViewerApp {
     }
 
     @Bean
-    public CommandLineRunner run(LogRecordFileReader reader) {
+    public CommandLineRunner run() {
         return args -> {
             if (GraphicsEnvironment.isHeadless()) {
                 System.err.println("Cannot launch UI: running in headless mode");
@@ -28,8 +27,4 @@ public class LogViewerApp {
         };
     }
 
-    @Bean
-    public LogRecordFileReader log4jXmlReader() {
-        return new LogRecordFileReader();
-    }
 }

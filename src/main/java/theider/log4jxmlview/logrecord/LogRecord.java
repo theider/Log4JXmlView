@@ -1,8 +1,5 @@
 package theider.log4jxmlview.logrecord;
 
-import java.time.Instant;
-import java.time.format.DateTimeFormatter;
-
 public record LogRecord(
     String timestamp,
     long sequence,
@@ -12,8 +9,6 @@ public record LogRecord(
     String message,
     String threadName,
     long threadId,
-    String mdc,
-    String ndc,
     String hostName,
     String processName,
     long processId,

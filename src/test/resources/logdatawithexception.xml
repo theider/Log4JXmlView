@@ -1,18 +1,532 @@
-<record><timestamp>2025-03-21T16:03:12.774Z</timestamp><sequence>4013</sequence><loggerClassName>org.jboss.logging.DelegatingBasicLogger</loggerClassName><loggerName>io.undertow.servlet</loggerName><level>ERROR</level><message>Exception while dispatching incoming RPC call</message><threadName>default task-1</threadName><threadId>200</threadId><mdc></mdc><ndc></ndc><hostName>app1</hostName><processName>jboss-modules.jar</processName><processId>30266</processId><exception refId="1"><exceptionType>com.google.gwt.user.client.rpc.SerializationException</exceptionType><message>Type 'com.ecentiv.connect.server.handler.GetContactHandler$1' was not included in the set of types which can be serialized by this SerializationPolicy or its Class object could not be loaded. For security purposes, this type will not be serialized.: instance = contactKey=null, name=null, optedOut=false, optOutMessage=null, fieldValue={}, availableChannels={}</message><frames><frame><class>com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter</class><method>serialize</method><line>699</line></frame><frame><class>com.google.gwt.user.client.rpc.impl.AbstractSerializationStreamWriter</class><method>writeObject</method><line>130</line></frame><frame><class>com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter$ValueWriter$8</class><method>write</method><line>169</line></frame><frame><class>com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter</class><method>serializeValue</method><line>609</line></frame><frame><class>com.google.gwt.user.server.rpc.RPC</class><method>encodeResponse</method><line>644</line></frame><frame><class>com.google.gwt.user.server.rpc.RPC</class><method>encodeResponseForSuccess</method><line>497</line></frame><frame><class>com.google.gwt.user.server.rpc.RPC</class><method>invokeAndEncodeResponse</method><line>589</line></frame><frame><class>com.google.gwt.user.server.rpc.RemoteServiceServlet</class><method>processCall</method><line>349</line></frame><frame><class>com.google.gwt.user.server.rpc.RemoteServiceServlet</class><method>processCall</method><line>319</line></frame><frame><class>com.google.gwt.user.server.rpc.RemoteServiceServlet</class><method>processPost</method><line>389</line></frame><frame><class>com.google.gwt.user.server.rpc.AbstractRemoteServiceServlet</class><method>doPost</method><line>62</line></frame><frame><class>javax.servlet.http.HttpServlet</class><method>service</method><line>523</line></frame><frame><class>javax.servlet.http.HttpServlet</class><method>service</method><line>590</line></frame><frame><class>com.google.inject.servlet.ServletDefinition</class><method>doServiceImpl</method><line>290</line></frame><frame><class>com.google.inject.servlet.ServletDefinition</class><method>doService</method><line>280</line></frame><frame><class>com.google.inject.servlet.ServletDefinition</class><method>service</method><line>184</line></frame><frame><class>com.google.inject.servlet.ManagedServletPipeline</class><method>service</method><line>89</line></frame><frame><class>com.google.inject.servlet.FilterChainInvocation</class><method>doFilter</method><line>85</line></frame><frame><class>com.google.inject.servlet.ManagedFilterPipeline</class><method>dispatch</method><line>121</line></frame><frame><class>com.google.inject.servlet.GuiceFilter</class><method>doFilter</method><line>133</line></frame><frame><class>io.undertow.servlet.core.ManagedFilter</class><method>doFilter</method><line>61</line></frame><frame><class>io.undertow.servlet.handlers.FilterHandler$FilterChainImpl</class><method>doFilter</method><line>131</line></frame><frame><class>io.undertow.servlet.handlers.FilterHandler</class><method>handleRequest</method><line>84</line></frame><frame><class>io.undertow.servlet.handlers.security.ServletSecurityRoleHandler</class><method>handleRequest</method><line>62</line></frame><frame><class>io.undertow.servlet.handlers.ServletChain$1</class><method>handleRequest</method><line>68</line></frame><frame><class>io.undertow.servlet.handlers.ServletDispatchingHandler</class><method>handleRequest</method><line>36</line></frame><frame><class>org.wildfly.elytron.web.undertow.server.ElytronRunAsHandler</class><method>lambda$handleRequest$1</method><line>68</line></frame><frame><class>org.wildfly.security.auth.server.FlexibleIdentityAssociation</class><method>runAsFunctionEx</method><line>103</line></frame><frame><class>org.wildfly.security.auth.server.Scoped</class><method>runAsFunctionEx</method><line>161</line></frame><frame><class>org.wildfly.security.auth.server.Scoped</class><method>runAs</method><line>73</line></frame><frame><class>org.wildfly.elytron.web.undertow.server.ElytronRunAsHandler</class><method>handleRequest</method><line>67</line></frame><frame><class>io.undertow.servlet.handlers.RedirectDirHandler</class><method>handleRequest</method><line>68</line></frame><frame><class>io.undertow.servlet.handlers.security.SSLInformationAssociationHandler</class><method>handleRequest</method><line>117</line></frame><frame><class>io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler</class><method>handleRequest</method><line>57</line></frame><frame><class>io.undertow.server.handlers.PredicateHandler</class><method>handleRequest</method><line>43</line></frame><frame><class>io.undertow.security.handlers.AbstractConfidentialityHandler</class><method>handleRequest</method><line>46</line></frame><frame><class>io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler</class><method>handleRequest</method><line>64</line></frame><frame><class>io.undertow.security.handlers.AbstractSecurityContextAssociationHandler</class><method>handleRequest</method><line>43</line></frame><frame><class>org.wildfly.elytron.web.undertow.server.servlet.CleanUpHandler</class><method>handleRequest</method><line>38</line></frame><frame><class>io.undertow.server.handlers.PredicateHandler</class><method>handleRequest</method><line>43</line></frame><frame><class>org.wildfly.extension.undertow.security.jacc.JACCContextIdHandler</class><method>handleRequest</method><line>61</line></frame><frame><class>io.undertow.server.handlers.PredicateHandler</class><method>handleRequest</method><line>43</line></frame><frame><class>org.wildfly.extension.undertow.deployment.GlobalRequestControllerHandler</class><method>handleRequest</method><line>68</line></frame><frame><class>io.undertow.servlet.handlers.SendErrorPageHandler</class><method>handleRequest</method><line>52</line></frame><frame><class>io.undertow.server.handlers.PredicateHandler</class><method>handleRequest</method><line>43</line></frame><frame><class>io.undertow.server.handlers.MetricsHandler</class><method>handleRequest</method><line>64</line></frame><frame><class>io.undertow.servlet.core.MetricsChainHandler</class><method>handleRequest</method><line>59</line></frame><frame><class>io.undertow.servlet.handlers.ServletInitialHandler</class><method>handleFirstRequest</method><line>275</line></frame><frame><class>io.undertow.servlet.handlers.ServletInitialHandler</class><method>access$100</method><line>79</line></frame><frame><class>io.undertow.servlet.handlers.ServletInitialHandler$2</class><method>call</method><line>134</line></frame><frame><class>io.undertow.servlet.handlers.ServletInitialHandler$2</class><method>call</method><line>131</line></frame><frame><class>io.undertow.servlet.core.ServletRequestContextThreadSetupAction$1</class><method>call</method><line>48</line></frame><frame><class>io.undertow.servlet.core.ContextClassLoaderSetupAction$1</class><method>call</method><line>43</line></frame><frame><class>org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction</class><method>lambda$create$0</method><line>1544</line></frame><frame><class>org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction</class><method>lambda$create$0</method><line>1544</line></frame><frame><class>org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction</class><method>lambda$create$0</method><line>1544</line></frame><frame><class>org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction</class><method>lambda$create$0</method><line>1544</line></frame><frame><class>io.undertow.servlet.handlers.ServletInitialHandler</class><method>dispatchRequest</method><line>255</line></frame><frame><class>io.undertow.servlet.handlers.ServletInitialHandler</class><method>access$000</method><line>79</line></frame><frame><class>io.undertow.servlet.handlers.ServletInitialHandler$1</class><method>handleRequest</method><line>100</line></frame><frame><class>io.undertow.server.Connectors</class><method>executeRootHandler</method><line>387</line></frame><frame><class>io.undertow.server.HttpServerExchange$1</class><method>run</method><line>852</line></frame><frame><class>org.jboss.threads.ContextClassLoaderSavingRunnable</class><method>run</method><line>35</line></frame><frame><class>org.jboss.threads.EnhancedQueueExecutor</class><method>safeRun</method><line>1990</line></frame><frame><class>org.jboss.threads.EnhancedQueueExecutor$ThreadBody</class><method>doRunTask</method><line>1486</line></frame><frame><class>org.jboss.threads.EnhancedQueueExecutor$ThreadBody</class><method>run</method><line>1377</line></frame><frame><class>org.xnio.XnioWorker$WorkerThreadFactory$1$1</class><method>run</method><line>1282</line></frame><frame><class>java.lang.Thread</class><method>run</method><line>1576</line></frame></frames></exception></record>
-<record><timestamp>2025-03-21T16:03:13.547Z</timestamp><sequence>4014</sequence><loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName><loggerName>com.ecentiv.connect.server.rest.dataCollection.DataCollectionResource</loggerName><level>WARN</level><message>get active key for 237802:2275</message><threadName>default task-10</threadName><threadId>349</threadId><mdc></mdc><ndc></ndc><hostName>app1</hostName><processName>jboss-modules.jar</processName><processId>30266</processId></record>
-<record><timestamp>2025-03-21T16:03:13.549Z</timestamp><sequence>4015</sequence><loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName><loggerName>com.ecentiv.connect.server.rest.dataCollection.DataCollectionResource</loggerName><level>WARN</level><message>dao returned collection id = 0</message><threadName>default task-10</threadName><threadId>349</threadId><mdc></mdc><ndc></ndc><hostName>app1</hostName><processName>jboss-modules.jar</processName><processId>30266</processId></record>
-<record><timestamp>2025-03-21T16:03:14.366Z</timestamp><sequence>4016</sequence><loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName><loggerName>com.ecentiv.connect.server.rest.dataCollection.DataCollectionResource</loggerName><level>WARN</level><message>get active key for 237539:1124</message><threadName>default task-8</threadName><threadId>298</threadId><mdc></mdc><ndc></ndc><hostName>app1</hostName><processName>jboss-modules.jar</processName><processId>30266</processId></record>
-<record><timestamp>2025-03-21T16:03:14.368Z</timestamp><sequence>4017</sequence><loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName><loggerName>com.ecentiv.connect.server.rest.dataCollection.DataCollectionResource</loggerName><level>WARN</level><message>dao returned collection id = 0</message><threadName>default task-8</threadName><threadId>298</threadId><mdc></mdc><ndc></ndc><hostName>app1</hostName><processName>jboss-modules.jar</processName><processId>30266</processId></record>
-<record><timestamp>2025-03-21T16:03:14.423Z</timestamp><sequence>4018</sequence><loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName><loggerName>com.ecentiv.connect.server.handler.GetConversationsListHandler</loggerName><level>WARN</level><message>GetConversationsListHandler process request GetConversationsListRequest{direction=Received, start=0, length=25, optedOut=false, searchId=1, sortId=R}</message><threadName>default task-8</threadName><threadId>298</threadId><mdc></mdc><ndc></ndc><hostName>app1</hostName><processName>jboss-modules.jar</processName><processId>30266</processId></record>
-<record><timestamp>2025-03-21T16:03:21.461Z</timestamp><sequence>4031</sequence><loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName><loggerName>com.ecentiv.connect.server.domain.ContactDao</loggerName><level>WARN</level><message>save contact Contact{key=3331045, accountKey=237783, channelAddresses={SMS=7134445124, EMAIL=anil.rehmtullah@gmail.com}, fieldValues={2012=null, 2011=null, 1020=null, 2010=null, 2009=null, 2008=null, 2007=null, 2006=null, 1016=null, 2005=null, 1015=null, 2004=null, 1014=null, 2003=null, 1013=null, 2002=null, 1012=null, 2001=Tundra, 1011=null, 1010=null, 1008=2023, 100=7134445124, 1007=null, 101=anil.rehmtullah@gmail.com, 200=Anil, 1006=Toyota, 2018=null, 201=Rehmtullah, 1027=7134445124, 2017=null, 1005=null, 1004=Tundra, 2016=null, 1003=the web, 2015=null, 1002=5TFLA5DB7PX086010, 2014=null, 1100=null, 2013=null, 1001=null}}</message><threadName>HostPeriodic_MessageIntakeProcess</threadName><threadId>351</threadId><mdc></mdc><ndc></ndc><hostName>app1</hostName><processName>jboss-modules.jar</processName><processId>30266</processId></record>
-<record><timestamp>2025-03-21T16:03:21.504Z</timestamp><sequence>4032</sequence><loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName><loggerName>com.ecentiv.connect.server.util.feedapi.FeedEmailParserBase</loggerName><level>WARN</level><message>JD: Setting duplicates for lead from 1812051 count was 0 new count is 1</message><threadName>HostPeriodic_MessageIntakeProcess</threadName><threadId>351</threadId><mdc></mdc><ndc></ndc><hostName>app1</hostName><processName>jboss-modules.jar</processName><processId>30266</processId></record>
-<record><timestamp>2025-03-21T16:03:21.504Z</timestamp><sequence>4033</sequence><loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName><loggerName>com.ecentiv.connect.server.util.feedapi.FeedEmailParserBase</loggerName><level>WARN</level><message>Check search match for new contact 3331045</message><threadName>HostPeriodic_MessageIntakeProcess</threadName><threadId>351</threadId><mdc></mdc><ndc></ndc><hostName>app1</hostName><processName>jboss-modules.jar</processName><processId>30266</processId></record>
-<record><timestamp>2025-03-21T16:03:22.508Z</timestamp><sequence>4034</sequence><loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName><loggerName>com.ecentiv.connect.server.util.feedapi.FeedEmailParserBase</loggerName><level>WARN</level><message>contact notes fields not found for contact 3331045</message><threadName>HostPeriodic_MessageIntakeProcess</threadName><threadId>351</threadId><mdc></mdc><ndc></ndc><hostName>app1</hostName><processName>jboss-modules.jar</processName><processId>30266</processId></record>
-<record><timestamp>2025-03-21T16:03:23.036Z</timestamp><sequence>4035</sequence><loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName><loggerName>com.ecentiv.connect.server.domain.ContactDao</loggerName><level>WARN</level><message>save contact Contact{key=3426802, accountKey=237798, channelAddresses={SMS=5129833067, EMAIL=eddie.iglecias@yahoo.com}, fieldValues={2012=null, 2011=null, 2010=null, 1020=null, 2009=null, 2008=null, 2007=null, 1016=Kelley Blue Book ICO, 2006=null, 1015=null, 1014=null, 1013=null, 2002=Sierra, 1012=null, 1011=null, 2023=null, 1010=null, 2022=null, 2021=null, 2020=null, 1008=2024, 100=5129833067, 1007=17000, 2019=null, 200=Eduardo, 101=eddie.iglecias@yahoo.com, 1006=GMC, 201=Iglecias, 1005=Denali Ultimate Pickup 4D 5 3/4 ft, 1027=5129833067, 2017=null, 1004=Sierra 1500 Crew Cab, 2016=null, 1025=75074, 1003=KBB, 2015=null, 1002=1GTUUHEL6RZ132096, 1024=TX, 204=Offer Link: https://www.kbb.com/instant-cash-offer/offerDetails/?OfferID=d9a16f64-2f9a-40c3-b4a8-b468a9dde5b3 
+<record>
+    <timestamp>2025-03-21T16:03:12.774Z</timestamp>
+    <sequence>4013</sequence>
+    <loggerClassName>org.jboss.logging.DelegatingBasicLogger</loggerClassName>
+    <loggerName>io.undertow.servlet</loggerName>
+    <level>ERROR</level>
+    <message>Exception while dispatching incoming RPC call</message>
+    <threadName>default task-1</threadName>
+    <threadId>200</threadId>
+    <mdc></mdc>
+    <ndc></ndc>
+    <hostName>app1</hostName>
+    <processName>jboss-modules.jar</processName>
+    <processId>30266</processId>
+    <exception refId="1">
+        <exceptionType>com.google.gwt.user.client.rpc.SerializationException</exceptionType>
+        <message>Type 'com.ecentiv.connect.server.handler.GetContactHandler$1' was not included in the set of types which can be serialized by this SerializationPolicy or its Class object could not be loaded. For security purposes, this type will not be serialized.: instance = contactKey=null, name=null, optedOut=false, optOutMessage=null, fieldValue={}, availableChannels={}</message>
+        <frames>
+            <frame>
+                <class>com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter</class>
+                <method>serialize</method>
+                <line>699</line>
+            </frame>
+            <frame>
+                <class>com.google.gwt.user.client.rpc.impl.AbstractSerializationStreamWriter</class>
+                <method>writeObject</method>
+                <line>130</line>
+            </frame>
+            <frame>
+                <class>com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter$ValueWriter$8</class>
+                <method>write</method>
+                <line>169</line>
+            </frame>
+            <frame>
+                <class>com.google.gwt.user.server.rpc.impl.ServerSerializationStreamWriter</class>
+                <method>serializeValue</method>
+                <line>609</line>
+            </frame>
+            <frame>
+                <class>com.google.gwt.user.server.rpc.RPC</class>
+                <method>encodeResponse</method>
+                <line>644</line>
+            </frame>
+            <frame>
+                <class>com.google.gwt.user.server.rpc.RPC</class>
+                <method>encodeResponseForSuccess</method>
+                <line>497</line>
+            </frame>
+            <frame>
+                <class>com.google.gwt.user.server.rpc.RPC</class>
+                <method>invokeAndEncodeResponse</method>
+                <line>589</line>
+            </frame>
+            <frame>
+                <class>com.google.gwt.user.server.rpc.RemoteServiceServlet</class>
+                <method>processCall</method>
+                <line>349</line>
+            </frame>
+            <frame>
+                <class>com.google.gwt.user.server.rpc.RemoteServiceServlet</class>
+                <method>processCall</method>
+                <line>319</line>
+            </frame>
+            <frame>
+                <class>com.google.gwt.user.server.rpc.RemoteServiceServlet</class>
+                <method>processPost</method>
+                <line>389</line>
+            </frame>
+            <frame>
+                <class>com.google.gwt.user.server.rpc.AbstractRemoteServiceServlet</class>
+                <method>doPost</method>
+                <line>62</line>
+            </frame>
+            <frame>
+                <class>javax.servlet.http.HttpServlet</class>
+                <method>service</method>
+                <line>523</line>
+            </frame>
+            <frame>
+                <class>javax.servlet.http.HttpServlet</class>
+                <method>service</method>
+                <line>590</line>
+            </frame>
+            <frame>
+                <class>com.google.inject.servlet.ServletDefinition</class>
+                <method>doServiceImpl</method>
+                <line>290</line>
+            </frame>
+            <frame>
+                <class>com.google.inject.servlet.ServletDefinition</class>
+                <method>doService</method>
+                <line>280</line>
+            </frame>
+            <frame>
+                <class>com.google.inject.servlet.ServletDefinition</class>
+                <method>service</method>
+                <line>184</line>
+            </frame>
+            <frame>
+                <class>com.google.inject.servlet.ManagedServletPipeline</class>
+                <method>service</method>
+                <line>89</line>
+            </frame>
+            <frame>
+                <class>com.google.inject.servlet.FilterChainInvocation</class>
+                <method>doFilter</method>
+                <line>85</line>
+            </frame>
+            <frame>
+                <class>com.google.inject.servlet.ManagedFilterPipeline</class>
+                <method>dispatch</method>
+                <line>121</line>
+            </frame>
+            <frame>
+                <class>com.google.inject.servlet.GuiceFilter</class>
+                <method>doFilter</method>
+                <line>133</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.core.ManagedFilter</class>
+                <method>doFilter</method>
+                <line>61</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.FilterHandler$FilterChainImpl</class>
+                <method>doFilter</method>
+                <line>131</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.FilterHandler</class>
+                <method>handleRequest</method>
+                <line>84</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.security.ServletSecurityRoleHandler</class>
+                <method>handleRequest</method>
+                <line>62</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.ServletChain$1</class>
+                <method>handleRequest</method>
+                <line>68</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.ServletDispatchingHandler</class>
+                <method>handleRequest</method>
+                <line>36</line>
+            </frame>
+            <frame>
+                <class>org.wildfly.elytron.web.undertow.server.ElytronRunAsHandler</class>
+                <method>lambda$handleRequest$1</method>
+                <line>68</line>
+            </frame>
+            <frame>
+                <class>org.wildfly.security.auth.server.FlexibleIdentityAssociation</class>
+                <method>runAsFunctionEx</method>
+                <line>103</line>
+            </frame>
+            <frame>
+                <class>org.wildfly.security.auth.server.Scoped</class>
+                <method>runAsFunctionEx</method>
+                <line>161</line>
+            </frame>
+            <frame>
+                <class>org.wildfly.security.auth.server.Scoped</class>
+                <method>runAs</method>
+                <line>73</line>
+            </frame>
+            <frame>
+                <class>org.wildfly.elytron.web.undertow.server.ElytronRunAsHandler</class>
+                <method>handleRequest</method>
+                <line>67</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.RedirectDirHandler</class>
+                <method>handleRequest</method>
+                <line>68</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.security.SSLInformationAssociationHandler</class>
+                <method>handleRequest</method>
+                <line>117</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.security.ServletAuthenticationCallHandler</class>
+                <method>handleRequest</method>
+                <line>57</line>
+            </frame>
+            <frame>
+                <class>io.undertow.server.handlers.PredicateHandler</class>
+                <method>handleRequest</method>
+                <line>43</line>
+            </frame>
+            <frame>
+                <class>io.undertow.security.handlers.AbstractConfidentialityHandler</class>
+                <method>handleRequest</method>
+                <line>46</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.security.ServletConfidentialityConstraintHandler</class>
+                <method>handleRequest</method>
+                <line>64</line>
+            </frame>
+            <frame>
+                <class>io.undertow.security.handlers.AbstractSecurityContextAssociationHandler</class>
+                <method>handleRequest</method>
+                <line>43</line>
+            </frame>
+            <frame>
+                <class>org.wildfly.elytron.web.undertow.server.servlet.CleanUpHandler</class>
+                <method>handleRequest</method>
+                <line>38</line>
+            </frame>
+            <frame>
+                <class>io.undertow.server.handlers.PredicateHandler</class>
+                <method>handleRequest</method>
+                <line>43</line>
+            </frame>
+            <frame>
+                <class>org.wildfly.extension.undertow.security.jacc.JACCContextIdHandler</class>
+                <method>handleRequest</method>
+                <line>61</line>
+            </frame>
+            <frame>
+                <class>io.undertow.server.handlers.PredicateHandler</class>
+                <method>handleRequest</method>
+                <line>43</line>
+            </frame>
+            <frame>
+                <class>org.wildfly.extension.undertow.deployment.GlobalRequestControllerHandler</class>
+                <method>handleRequest</method>
+                <line>68</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.SendErrorPageHandler</class>
+                <method>handleRequest</method>
+                <line>52</line>
+            </frame>
+            <frame>
+                <class>io.undertow.server.handlers.PredicateHandler</class>
+                <method>handleRequest</method>
+                <line>43</line>
+            </frame>
+            <frame>
+                <class>io.undertow.server.handlers.MetricsHandler</class>
+                <method>handleRequest</method>
+                <line>64</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.core.MetricsChainHandler</class>
+                <method>handleRequest</method>
+                <line>59</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.ServletInitialHandler</class>
+                <method>handleFirstRequest</method>
+                <line>275</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.ServletInitialHandler</class>
+                <method>access$100</method>
+                <line>79</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.ServletInitialHandler$2</class>
+                <method>call</method>
+                <line>134</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.ServletInitialHandler$2</class>
+                <method>call</method>
+                <line>131</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.core.ServletRequestContextThreadSetupAction$1</class>
+                <method>call</method>
+                <line>48</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.core.ContextClassLoaderSetupAction$1</class>
+                <method>call</method>
+                <line>43</line>
+            </frame>
+            <frame>
+                <class>org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction</class>
+                <method>lambda$create$0</method>
+                <line>1544</line>
+            </frame>
+            <frame>
+                <class>org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction</class>
+                <method>lambda$create$0</method>
+                <line>1544</line>
+            </frame>
+            <frame>
+                <class>org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction</class>
+                <method>lambda$create$0</method>
+                <line>1544</line>
+            </frame>
+            <frame>
+                <class>org.wildfly.extension.undertow.deployment.UndertowDeploymentInfoService$UndertowThreadSetupAction</class>
+                <method>lambda$create$0</method>
+                <line>1544</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.ServletInitialHandler</class>
+                <method>dispatchRequest</method>
+                <line>255</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.ServletInitialHandler</class>
+                <method>access$000</method>
+                <line>79</line>
+            </frame>
+            <frame>
+                <class>io.undertow.servlet.handlers.ServletInitialHandler$1</class>
+                <method>handleRequest</method>
+                <line>100</line>
+            </frame>
+            <frame>
+                <class>io.undertow.server.Connectors</class>
+                <method>executeRootHandler</method>
+                <line>387</line>
+            </frame>
+            <frame>
+                <class>io.undertow.server.HttpServerExchange$1</class>
+                <method>run</method>
+                <line>852</line>
+            </frame>
+            <frame>
+                <class>org.jboss.threads.ContextClassLoaderSavingRunnable</class>
+                <method>run</method>
+                <line>35</line>
+            </frame>
+            <frame>
+                <class>org.jboss.threads.EnhancedQueueExecutor</class>
+                <method>safeRun</method>
+                <line>1990</line>
+            </frame>
+            <frame>
+                <class>org.jboss.threads.EnhancedQueueExecutor$ThreadBody</class>
+                <method>doRunTask</method>
+                <line>1486</line>
+            </frame>
+            <frame>
+                <class>org.jboss.threads.EnhancedQueueExecutor$ThreadBody</class>
+                <method>run</method>
+                <line>1377</line>
+            </frame>
+            <frame>
+                <class>org.xnio.XnioWorker$WorkerThreadFactory$1$1</class>
+                <method>run</method>
+                <line>1282</line>
+            </frame>
+            <frame>
+                <class>java.lang.Thread</class>
+                <method>run</method>
+                <line>1576</line>
+            </frame>
+        </frames>
+    </exception>
+</record>
+<record>
+    <timestamp>2025-03-21T16:03:13.547Z</timestamp>
+    <sequence>4014</sequence>
+    <loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName>
+    <loggerName>com.ecentiv.connect.server.rest.dataCollection.DataCollectionResource</loggerName>
+    <level>WARN</level>
+    <message>get active key for 237802:2275</message>
+    <threadName>default task-10</threadName>
+    <threadId>349</threadId>
+    <mdc></mdc>
+    <ndc></ndc>
+    <hostName>app1</hostName>
+    <processName>jboss-modules.jar</processName>
+    <processId>30266</processId>
+</record>
+<record>
+    <timestamp>2025-03-21T16:03:13.549Z</timestamp>
+    <sequence>4015</sequence>
+    <loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName>
+    <loggerName>com.ecentiv.connect.server.rest.dataCollection.DataCollectionResource</loggerName>
+    <level>WARN</level>
+    <message>dao returned collection id = 0</message>
+    <threadName>default task-10</threadName>
+    <threadId>349</threadId>
+    <mdc></mdc>
+    <ndc></ndc>
+    <hostName>app1</hostName>
+    <processName>jboss-modules.jar</processName>
+    <processId>30266</processId>
+</record>
+<record>
+    <timestamp>2025-03-21T16:03:14.366Z</timestamp>
+    <sequence>4016</sequence>
+    <loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName>
+    <loggerName>com.ecentiv.connect.server.rest.dataCollection.DataCollectionResource</loggerName>
+    <level>WARN</level>
+    <message>get active key for 237539:1124</message>
+    <threadName>default task-8</threadName>
+    <threadId>298</threadId>
+    <mdc></mdc>
+    <ndc></ndc>
+    <hostName>app1</hostName>
+    <processName>jboss-modules.jar</processName>
+    <processId>30266</processId>
+</record>
+<record>
+    <timestamp>2025-03-21T16:03:14.368Z</timestamp>
+    <sequence>4017</sequence>
+    <loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName>
+    <loggerName>com.ecentiv.connect.server.rest.dataCollection.DataCollectionResource</loggerName>
+    <level>WARN</level>
+    <message>dao returned collection id = 0</message>
+    <threadName>default task-8</threadName>
+    <threadId>298</threadId>
+    <mdc></mdc>
+    <ndc></ndc>
+    <hostName>app1</hostName>
+    <processName>jboss-modules.jar</processName>
+    <processId>30266</processId>
+</record>
+<record>
+    <timestamp>2025-03-21T16:03:14.423Z</timestamp>
+    <sequence>4018</sequence>
+    <loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName>
+    <loggerName>com.ecentiv.connect.server.handler.GetConversationsListHandler</loggerName>
+    <level>WARN</level>
+    <message>GetConversationsListHandler process request GetConversationsListRequest{direction=Received, start=0, length=25, optedOut=false, searchId=1, sortId=R}</message>
+    <threadName>default task-8</threadName>
+    <threadId>298</threadId>
+    <mdc></mdc>
+    <ndc></ndc>
+    <hostName>app1</hostName>
+    <processName>jboss-modules.jar</processName>
+    <processId>30266</processId>
+</record>
+<record>
+    <timestamp>2025-03-21T16:03:21.461Z</timestamp>
+    <sequence>4031</sequence>
+    <loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName>
+    <loggerName>com.ecentiv.connect.server.domain.ContactDao</loggerName>
+    <level>WARN</level>
+    <message>save contact Contact{key=3331045, accountKey=237783, channelAddresses={SMS=7134445124, EMAIL=anil.rehmtullah@gmail.com}, fieldValues={2012=null, 2011=null, 1020=null, 2010=null, 2009=null, 2008=null, 2007=null, 2006=null, 1016=null, 2005=null, 1015=null, 2004=null, 1014=null, 2003=null, 1013=null, 2002=null, 1012=null, 2001=Tundra, 1011=null, 1010=null, 1008=2023, 100=7134445124, 1007=null, 101=anil.rehmtullah@gmail.com, 200=Anil, 1006=Toyota, 2018=null, 201=Rehmtullah, 1027=7134445124, 2017=null, 1005=null, 1004=Tundra, 2016=null, 1003=the web, 2015=null, 1002=5TFLA5DB7PX086010, 2014=null, 1100=null, 2013=null, 1001=null}}</message>
+    <threadName>HostPeriodic_MessageIntakeProcess</threadName>
+    <threadId>351</threadId>
+    <mdc></mdc>
+    <ndc></ndc>
+    <hostName>app1</hostName>
+    <processName>jboss-modules.jar</processName>
+    <processId>30266</processId>
+</record>
+<record>
+    <timestamp>2025-03-21T16:03:21.504Z</timestamp>
+    <sequence>4032</sequence>
+    <loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName>
+    <loggerName>com.ecentiv.connect.server.util.feedapi.FeedEmailParserBase</loggerName>
+    <level>WARN</level>
+    <message>JD: Setting duplicates for lead from 1812051 count was 0 new count is 1</message>
+    <threadName>HostPeriodic_MessageIntakeProcess</threadName>
+    <threadId>351</threadId>
+    <mdc></mdc>
+    <ndc></ndc>
+    <hostName>app1</hostName>
+    <processName>jboss-modules.jar</processName>
+    <processId>30266</processId>
+</record>
+<record>
+    <timestamp>2025-03-21T16:03:21.504Z</timestamp>
+    <sequence>4033</sequence>
+    <loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName>
+    <loggerName>com.ecentiv.connect.server.util.feedapi.FeedEmailParserBase</loggerName>
+    <level>WARN</level>
+    <message>Check search match for new contact 3331045</message>
+    <threadName>HostPeriodic_MessageIntakeProcess</threadName>
+    <threadId>351</threadId>
+    <mdc></mdc>
+    <ndc></ndc>
+    <hostName>app1</hostName>
+    <processName>jboss-modules.jar</processName>
+    <processId>30266</processId>
+</record>
+<record>
+    <timestamp>2025-03-21T16:03:22.508Z</timestamp>
+    <sequence>4034</sequence>
+    <loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName>
+    <loggerName>com.ecentiv.connect.server.util.feedapi.FeedEmailParserBase</loggerName>
+    <level>WARN</level>
+    <message>contact notes fields not found for contact 3331045</message>
+    <threadName>HostPeriodic_MessageIntakeProcess</threadName>
+    <threadId>351</threadId>
+    <mdc></mdc>
+    <ndc></ndc>
+    <hostName>app1</hostName>
+    <processName>jboss-modules.jar</processName>
+    <processId>30266</processId>
+</record>
+<record>
+    <timestamp>2025-03-21T16:03:23.036Z</timestamp>
+    <sequence>4035</sequence>
+    <loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName>
+    <loggerName>com.ecentiv.connect.server.domain.ContactDao</loggerName>
+    <level>WARN</level>
+    <message>save contact Contact{key=3426802, accountKey=237798, channelAddresses={SMS=5129833067, EMAIL=eddie.iglecias@yahoo.com}, fieldValues={2012=null, 2011=null, 2010=null, 1020=null, 2009=null, 2008=null, 2007=null, 1016=Kelley Blue Book ICO, 2006=null, 1015=null, 1014=null, 1013=null, 2002=Sierra, 1012=null, 1011=null, 2023=null, 1010=null, 2022=null, 2021=null, 2020=null, 1008=2024, 100=5129833067, 1007=17000, 2019=null, 200=Eduardo, 101=eddie.iglecias@yahoo.com, 1006=GMC, 201=Iglecias, 1005=Denali Ultimate Pickup 4D 5 3/4 ft, 1027=5129833067, 2017=null, 1004=Sierra 1500 Crew Cab, 2016=null, 1025=75074, 1003=KBB, 2015=null, 1002=1GTUUHEL6RZ132096, 1024=TX, 204=Offer Link: https://www.kbb.com/instant-cash-offer/offerDetails/?OfferID=d9a16f64-2f9a-40c3-b4a8-b468a9dde5b3 
 
-Offer Amount: $53,703
-Traffic Source: Kelley Blue Book
+        Offer Amount: $53,703
+        Traffic Source: Kelley Blue Book
 
 
-Vehicle Comments --, 2014=null, 1023=Plano, 1001=53703, 1100=null, 2013=null}}</message><threadName>HostPeriodic_MessageIntakeProcess</threadName><threadId>351</threadId><mdc></mdc><ndc></ndc><hostName>app1</hostName><processName>jboss-modules.jar</processName><processId>30266</processId></record>
-<record><timestamp>2025-03-21T16:03:23.112Z</timestamp><sequence>4036</sequence><loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName><loggerName>com.ecentiv.connect.server.util.feedapi.FeedEmailParserBase</loggerName><level>WARN</level><message>Check search match for new contact 3426802</message><threadName>HostPeriodic_MessageIntakeProcess</threadName><threadId>351</threadId><mdc></mdc><ndc></ndc><hostName>app1</hostName><processName>jboss-modules.jar</processName><processId>30266</processId></record>
+        Vehicle Comments --, 2014=null, 1023=Plano, 1001=53703, 1100=null, 2013=null}}</message>
+    <threadName>HostPeriodic_MessageIntakeProcess</threadName>
+    <threadId>351</threadId>
+    <mdc></mdc>
+    <ndc></ndc>
+    <hostName>app1</hostName>
+    <processName>jboss-modules.jar</processName>
+    <processId>30266</processId>
+</record>
+<record>
+    <timestamp>2025-03-21T16:03:23.112Z</timestamp>
+    <sequence>4036</sequence>
+    <loggerClassName>org.apache.logging.log4j.spi.AbstractLogger</loggerClassName>
+    <loggerName>com.ecentiv.connect.server.util.feedapi.FeedEmailParserBase</loggerName>
+    <level>WARN</level>
+    <message>Check search match for new contact 3426802</message>
+    <threadName>HostPeriodic_MessageIntakeProcess</threadName>
+    <threadId>351</threadId>
+    <mdc></mdc>
+    <ndc></ndc>
+    <hostName>app1</hostName>
+    <processName>jboss-modules.jar</processName>
+    <processId>30266</processId>
+</record>

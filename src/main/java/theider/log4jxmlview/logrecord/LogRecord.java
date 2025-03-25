@@ -1,5 +1,8 @@
 package theider.log4jxmlview.logrecord;
 
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+
 public record LogRecord(
     String timestamp,
     long sequence,
@@ -15,6 +18,8 @@ public record LogRecord(
     String processName,
     long processId,
     LogException exception
+        // DateTimeFormatter.ISO_INSTANT.format
+        
 ) {
     @Override
     public String toString() {

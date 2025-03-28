@@ -8,10 +8,10 @@
         </encoder>
     </appender>
 
+    <logger name="theider.log4jxmlview" level="DEBUG"/>
+
     <root level="WARN">
         <appender-ref ref="STDOUT" />
     </root>
-
-    <logger name="theider.log4jxmlview" level="DEBUG" />
 
 </configuration>

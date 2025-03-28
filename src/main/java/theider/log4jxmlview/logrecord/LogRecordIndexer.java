@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LogRecordIndexer {
 
-    public record RecordIndex(long startOffset, long length) {}
-
+    private static final Logger logger = LoggerFactory.getLogger(LogRecordIndexer.class);
+    
     private static final byte[] START_TAG = "<record".getBytes(StandardCharsets.UTF_8);
     private static final byte[] END_TAG = "</record>".getBytes(StandardCharsets.UTF_8);
 
@@ -19,6 +21,7 @@ public class LogRecordIndexer {
     public LogRecordOffsetIndex indexRecords(InputStream in) throws IOException {
         long[] indexArray = new long[LONG_ARRAY_PAGESIZE];
         int recordCount = 0;        
+        logger.debug("loading index from stream...");
         CountingInputStream cis = new CountingInputStream(new BufferedInputStream(in));
 
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -49,9 +52,10 @@ public class LogRecordIndexer {
                 buffer.reset();
             }
         }
-        if(indexArray.length < recordCount) {
+        if(indexArray.length >= recordCount) {
             indexArray = Arrays.copyOf(indexArray, recordCount);
         }
+        logger.debug("scanned index of {} records size {} bytes.", recordCount, indexArray.length * (Long.SIZE / 8));
         return new LogRecordOffsetIndex(cis.getCount(), indexArray);
     }
 

@@ -34,13 +34,6 @@
             <version>2.12.2</version>
         </dependency>
 
-        <!-- Optional: Logging -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-logging</artifactId>
-            <version>${spring-boot.version}</version>
-        </dependency>
-
         <!-- Optional: For cleaner shutdown -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -53,6 +46,11 @@
             <version>5.14.2</version>
             <scope>test</scope>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.5.17</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

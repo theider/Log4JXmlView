@@ -31,8 +31,8 @@ public class LogRecordFactory {
 
             switch (state) {
                 case ParserScanningToRecord -> {
-                    if (event == XMLStreamConstants.START_ELEMENT &&
-                        reader.getLocalName().equals("record")) {
+                    if (event == XMLStreamConstants.START_ELEMENT
+                            && reader.getLocalName().equals("record")) {
                         fieldMap.clear();
                         logException = null;
                         state = ParserState.ParserLoadingFields;
@@ -47,21 +47,21 @@ public class LogRecordFactory {
                         } else {
                             fieldMap.put(tag, reader.getElementText());
                         }
-                    } else if (event == XMLStreamConstants.END_ELEMENT &&
-                               reader.getLocalName().equals("record")) {
+                    } else if (event == XMLStreamConstants.END_ELEMENT
+                            && reader.getLocalName().equals("record")) {
                         return new LogRecord(
-                            fieldMap.get("timestamp"),
-                            parseLong(fieldMap.get("sequence")),
-                            fieldMap.get("loggerClassName"),
-                            fieldMap.get("loggerName"),
-                            fieldMap.get("level"),
-                            fieldMap.get("message"),
-                            fieldMap.get("threadName"),
-                            parseLong(fieldMap.get("threadId")),
-                            fieldMap.get("hostName"),
-                            fieldMap.get("processName"),
-                            parseLong(fieldMap.get("processId")),
-                            logException
+                                fieldMap.get("timestamp"),
+                                parseLong(fieldMap.get("sequence")),
+                                fieldMap.get("loggerClassName"),
+                                fieldMap.get("loggerName"),
+                                fieldMap.get("level"),
+                                fieldMap.get("message"),
+                                fieldMap.get("threadName"),
+                                parseLong(fieldMap.get("threadId")),
+                                fieldMap.get("hostName"),
+                                fieldMap.get("processName"),
+                                parseLong(fieldMap.get("processId")),
+                                logException
                         );
                     }
                 }
@@ -70,13 +70,23 @@ public class LogRecordFactory {
                     if (event == XMLStreamConstants.START_ELEMENT) {
                         String tag = reader.getLocalName();
                         switch (tag) {
-                            case "exceptionType" -> exceptionType = reader.getElementText();
-                            case "message" -> exceptionMessage = reader.getElementText();
-                            case "frames" -> state = ParserState.ParserLoadingFrames;
+                            case "exceptionType" ->
+                                exceptionType = reader.getElementText();
+                            case "message" ->
+                                exceptionMessage = reader.getElementText();
+                            case "frames" ->
+                                state = ParserState.ParserLoadingFrames;
+                            case "causedBy" -> {
+                                // Recursively parse inner <exception>
+                                LogException inner = parseNestedException(reader);
+                                logException = new LogException(exceptionType, exceptionMessage, new ArrayList<>(stackFrames), inner);
+                                state = ParserState.ParserLoadingFields;
+                            }
                         }
-                    } else if (event == XMLStreamConstants.END_ELEMENT &&
-                               reader.getLocalName().equals("exception")) {
-                        logException = new LogException(exceptionType, exceptionMessage, new ArrayList<>(stackFrames));
+                    } else if (event == XMLStreamConstants.END_ELEMENT && reader.getLocalName().equals("exception")) {
+                        if (logException == null) {
+                            logException = new LogException(exceptionType, exceptionMessage, new ArrayList<>(stackFrames), null);
+                        }
                         state = ParserState.ParserLoadingFields;
                     }
                 }
@@ -90,12 +100,15 @@ public class LogRecordFactory {
                 case ParserLoadingFrame -> {
                     if (event == XMLStreamConstants.START_ELEMENT) {
                         switch (reader.getLocalName()) {
-                            case "class" -> frameClass = reader.getElementText();
-                            case "method" -> frameMethod = reader.getElementText();
-                            case "line" -> frameLine = Integer.parseInt(reader.getElementText());
+                            case "class" ->
+                                frameClass = reader.getElementText();
+                            case "method" ->
+                                frameMethod = reader.getElementText();
+                            case "line" ->
+                                frameLine = Integer.parseInt(reader.getElementText());
                         }
-                    } else if (event == XMLStreamConstants.END_ELEMENT &&
-                               reader.getLocalName().equals("frame")) {
+                    } else if (event == XMLStreamConstants.END_ELEMENT
+                            && reader.getLocalName().equals("frame")) {
                         stackFrames.add(new StackFrame(frameClass, frameMethod, frameLine));
                         state = ParserState.ParserLoadingFrames;
                     }
@@ -117,4 +130,56 @@ public class LogRecordFactory {
         ParserLoadingFrames,
         ParserLoadingFrame
     }
+
+    private LogException parseNestedException(XMLStreamReader reader) throws XMLStreamException {
+        String nestedType = null, nestedMessage = null;
+        List<StackFrame> nestedFrames = new ArrayList<>();
+
+        while (reader.hasNext()) {
+            int event = reader.next();
+
+            if (event == XMLStreamConstants.START_ELEMENT) {
+                String tag = reader.getLocalName();
+                switch (tag) {
+                    case "exceptionType" ->
+                        nestedType = reader.getElementText();
+                    case "message" ->
+                        nestedMessage = reader.getElementText();
+                    case "frame" ->
+                        nestedFrames.add(parseFrame(reader));
+                    case "causedBy" -> {
+                        LogException deeper = parseNestedException(reader);
+                        return new LogException(nestedType, nestedMessage, nestedFrames, deeper);
+                    }
+                }
+            } else if (event == XMLStreamConstants.END_ELEMENT
+                    && reader.getLocalName().equals("exception")) {
+                break;
+            }
+        }
+        return new LogException(nestedType, nestedMessage, nestedFrames, null);
+    }
+
+    private StackFrame parseFrame(XMLStreamReader reader) throws XMLStreamException {
+        String className = null, methodName = null;
+        int line = -1;
+        while (reader.hasNext()) {
+            int event = reader.next();
+            if (event == XMLStreamConstants.START_ELEMENT) {
+                switch (reader.getLocalName()) {
+                    case "class" ->
+                        className = reader.getElementText();
+                    case "method" ->
+                        methodName = reader.getElementText();
+                    case "line" ->
+                        line = Integer.parseInt(reader.getElementText());
+                }
+            } else if (event == XMLStreamConstants.END_ELEMENT
+                    && reader.getLocalName().equals("frame")) {
+                break;
+            }
+        }
+        return new StackFrame(className, methodName, line);
+    }
+
 }

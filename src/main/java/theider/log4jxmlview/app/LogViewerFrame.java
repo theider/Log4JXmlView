@@ -10,7 +10,7 @@ import java.awt.*;
 import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
-import theider.log4jxmlview.logrecord.LogFileRecordIndex;
+import theider.log4jxmlview.logrecord.LogRecordReader;
 
 public class LogViewerFrame extends JFrame {
 
@@ -62,7 +62,7 @@ public class LogViewerFrame extends JFrame {
     }
 
     private void showLogWindow(File file) throws IOException {
-        LogFileRecordIndex logFileRecordIndex = new LogFileRecordIndex(file);
+        LogRecordReader logFileRecordIndex = new LogRecordReader(file);
         LogViewerTableModel tableModel = new LogViewerTableModel(logFileRecordIndex);
         String title = logFileRecordIndex.getFilename();        
 

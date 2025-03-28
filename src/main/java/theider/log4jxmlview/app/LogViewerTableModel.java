@@ -15,9 +15,9 @@ public class LogViewerTableModel extends AbstractTableModel {
         "Timestamp", "Level", "Logger", "Message", "Thread", "Host", "Process", "Exception"
     };
 
-    private final LogFileRecordIndex index;
+    private final LogRecordReader index;
 
-    public LogViewerTableModel(LogFileRecordIndex index) {
+    public LogViewerTableModel(LogRecordReader index) {
         this.index = index;
     }
 
@@ -39,19 +39,17 @@ public class LogViewerTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         try {
-            Optional<LogRecord> optional = index.readRecordAt(rowIndex);
-            if (optional.isEmpty()) return "";
-
-            LogRecord r = optional.get();
+            LogRecord logRecord = index.readRecordAt(rowIndex);
+            
             return switch (columnIndex) {
-                case 0 -> r.timestamp();
-                case 1 -> r.level();
-                case 2 -> r.loggerName();
-                case 3 -> r.message();
-                case 4 -> r.threadName();
-                case 5 -> r.hostName();
-                case 6 -> r.processName();
-                case 7 -> (r.exception() != null) ? r.exception().exceptionType() : "";
+                case 0 -> logRecord.timestamp();
+                case 1 -> logRecord.level();
+                case 2 -> logRecord.loggerName();
+                case 3 -> logRecord.message();
+                case 4 -> logRecord.threadName();
+                case 5 -> logRecord.hostName();
+                case 6 -> logRecord.processName();
+                case 7 -> (logRecord.exception() != null) ? logRecord.exception().exceptionType() : "";
                 default -> "";
             };
         } catch (LogRecordIndexException e) {

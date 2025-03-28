@@ -17,13 +17,15 @@ public class LogRecordIndexer {
     private static final byte[] END_TAG = "</record>".getBytes(StandardCharsets.UTF_8);
 
     private static final int LONG_ARRAY_PAGESIZE = 4; // testing. should be a big value
-    
-    public LogRecordOffsetIndex indexRecords(InputStream in) throws IOException {
+        
+    public LogRecordOffsetIndex indexRecords(InputStream inputStream, ILogRecordIndexProgressListener progressListener, long filesizeBytes) throws IOException {
         long[] indexArray = new long[LONG_ARRAY_PAGESIZE];
         int recordCount = 0;        
         logger.debug("loading index from stream...");
-        CountingInputStream cis = new CountingInputStream(new BufferedInputStream(in));
+        CountingInputStream cis = new CountingInputStream(new BufferedInputStream(inputStream));
 
+        long lastReportedPercent = -1;
+        
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         boolean insideRecord = false;
         long recordStart = -1;
@@ -31,8 +33,16 @@ public class LogRecordIndexer {
         int b;
         while ((b = cis.read()) != -1) {
             buffer.write(b);
-            byte[] buf = buffer.toByteArray();
+            long bytesRead = cis.getCount(); // better than tracking manually
 
+            if (progressListener != null && filesizeBytes > 0) {
+                long percent = (bytesRead * 100) / filesizeBytes;
+                if (percent != lastReportedPercent) {
+                    progressListener.onProgress(bytesRead, filesizeBytes);
+                    lastReportedPercent = percent;
+                }
+            }
+            byte[] buf = buffer.toByteArray();
             if (!insideRecord && endsWith(buf, START_TAG)) {
                 insideRecord = true;
                 recordStart = cis.getCount() - START_TAG.length;

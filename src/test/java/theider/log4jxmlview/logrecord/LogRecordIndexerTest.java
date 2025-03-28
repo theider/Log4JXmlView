@@ -20,18 +20,26 @@ public class LogRecordIndexerTest {
 
     private static final Logger logger = LoggerFactory.getLogger(LogRecordIndexerTest.class);
 
+    
+    
     @Test
     public void testIndexLogRecords() throws Exception {
         URL resource = getClass().getClassLoader().getResource("logdatawithexception.xml");
         assertNotNull(resource, "Test file logdatawithexception.xml not found in resources");
         File file = new File(resource.toURI());
-
+        long fileSizeBytes = file.length();
+        
+        
         // First pass: build index
         try (InputStream inputStream = getClass().getClassLoader()
                 .getResourceAsStream("logdatawithexception.xml")) {
 
             LogRecordIndexer indexer = new LogRecordIndexer();
-            LogRecordOffsetIndex recordIndex = indexer.indexRecords(inputStream);
+            LogRecordOffsetIndex recordIndex = indexer.indexRecords(inputStream, 
+                    (read, total) -> {
+                        double percent = (read * 100.0) / total;
+                        logger.debug("Progress: {}%", String.format("%.2f", percent));
+                    }, fileSizeBytes);    
             
             assertFalse(recordIndex.getRecordCount() == 0, "No <record> entries found in the XML");
 

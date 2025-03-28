@@ -7,20 +7,25 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 import javax.xml.stream.XMLStreamException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LogRecordReader {
 
+    private static final Logger logger = LoggerFactory.getLogger(LogRecordReader.class);
+    
     private final File sourceLogFile;
 
     private final LogRecordOffsetIndex offsetIndex;
 
     private final LogRecordFactory factory;
 
-    public LogRecordReader(File sourceLogFile) throws IOException {
+    public LogRecordReader(File sourceLogFile, ILogRecordIndexProgressListener progressListener, long fileSizeBytes) throws IOException {
         this.sourceLogFile = sourceLogFile;
         try (InputStream in = new FileInputStream(sourceLogFile)) {
+            logger.debug("create log record reader {} {}", sourceLogFile.getAbsolutePath(), fileSizeBytes);
             LogRecordIndexer indexer = new LogRecordIndexer();
-            this.offsetIndex = indexer.indexRecords(in);
+            this.offsetIndex = indexer.indexRecords(in, progressListener, fileSizeBytes);
         }
         this.factory = new LogRecordFactory();
     }

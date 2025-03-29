@@ -52,14 +52,21 @@ public class LogViewerFrame extends JFrame {
     private void showLogWindow(File file) {
         // Setup progress dialog
         JDialog progressDialog = new JDialog(this, "Indexing Log File", true);
+        
         JProgressBar progressBar = new JProgressBar(0, 100);
         progressBar.setIndeterminate(false);
         progressBar.setStringPainted(true);
         progressBar.setPreferredSize(new Dimension(300, 24));
 
+        // Panel to wrap label and progress bar with padding
+        JPanel progressPanel = new JPanel();
+        progressPanel.setLayout(new BorderLayout(10, 10));
+        progressPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        progressPanel.add(new JLabel("<html><b>Building index...</b></html>"), BorderLayout.NORTH);
+        progressPanel.add(progressBar, BorderLayout.CENTER);
+        
         progressDialog.setLayout(new BorderLayout());
-        progressDialog.add(new JLabel("Building index..."), BorderLayout.NORTH);
-        progressDialog.add(progressBar, BorderLayout.CENTER);
+        progressDialog.add(progressPanel, BorderLayout.CENTER);
         progressDialog.pack();
         progressDialog.setLocationRelativeTo(this);
 
@@ -71,7 +78,6 @@ public class LogViewerFrame extends JFrame {
                 logger.debug("start record index in backgroup len=" + fileSize);
                 return new LogRecordReader(file, (bytesRead, totalBytes) -> {
                     int percent = (int) ((bytesRead * 100) / totalBytes);
-                    logger.debug("read update {} {} {}", percent, bytesRead, totalBytes);
                     publish(percent);
                 }, fileSize);
             }

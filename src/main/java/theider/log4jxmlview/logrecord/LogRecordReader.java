@@ -49,7 +49,7 @@ public class LogRecordReader {
             throw new LogRecordIndexException("Invalid length found at record index " + recordIndex + " len=" + length);
         }
 
-        byte[] xmlBytes;
+        byte[] xmlBytes = null;
         try (RandomAccessFile raf = new RandomAccessFile(sourceLogFile, "r")) {
             xmlBytes = new byte[(int) length];            
             raf.seek(offset);
@@ -58,9 +58,9 @@ public class LogRecordReader {
             LogRecord record = factory.fromInputStream(in);            
             return record;
         } catch (IOException | XMLStreamException ex) {
-            //String xmlText = xmlBytes == null ? null : new String(xmlBytes);
-            throw new LogRecordIndexException("Error reading log record at index " + recordIndex, ex);
-            //throw new LogRecordIndexException("Error reading log record at index " + recordIndex + " data:[" + xmlText + "]", ex);
+            String xmlText = xmlBytes == null ? null : new String(xmlBytes);
+            //throw new LogRecordIndexException("Error reading log record at index " + recordIndex, ex);
+            throw new LogRecordIndexException("Error reading log record at index " + recordIndex + " data:[" + xmlText + "]", ex);
         } 
     }
 }

@@ -26,125 +26,129 @@ public class LogRecordXmlParser {
         frameLine = -1;
     }
     
-    public LogRecord fromInputStream(InputStream xmlStream) throws XMLStreamException {
+    public LogRecord fromInputStream(InputStream xmlStream) throws LogRecordXmlParserException {
 
-        XMLInputFactory factory = XMLInputFactory.newInstance();
-        XMLStreamReader reader = factory.createXMLStreamReader(xmlStream, "UTF-8");
+        try {
+            XMLInputFactory factory = XMLInputFactory.newInstance();
+            XMLStreamReader reader = factory.createXMLStreamReader(xmlStream, "UTF-8");
 
-        ParserState state = ParserState.ParserScanningToRecord;
-        Map<String, String> fieldMap = new HashMap<>();
-        List<StackFrame> stackFrames = new ArrayList<>();
-        LogException logException = null;
+            ParserState state = ParserState.ParserScanningToRecord;
+            Map<String, String> fieldMap = new HashMap<>();
+            List<StackFrame> stackFrames = new ArrayList<>();
+            LogException logException = null;
 
-        String exceptionType = null, exceptionMessage = null;
-        resetFrameFields();
+            String exceptionType = null, exceptionMessage = null;
+            resetFrameFields();
 
-        while (reader.hasNext()) {
-            int event = reader.next();
+            while (reader.hasNext()) {
+                int event = reader.next();
 
-            switch (state) {
-                case ParserScanningToRecord -> {
-                    if (event == XMLStreamConstants.START_ELEMENT
-                            && reader.getLocalName().equals("record")) {
-                        fieldMap.clear();
-                        stackFrames.clear();
-                        logException = null;
-                        state = ParserState.ParserLoadingFields;
-                    }
-                }
-
-                case ParserLoadingFields -> {
-                    if (event == XMLStreamConstants.START_ELEMENT) {
-                        String tag = reader.getLocalName();
-                        if (tag.equals("exception")) {
-                            state = ParserState.ParserLoadingException;
-                        } else {
-                            String text = reader.getElementText();
-                            fieldMap.put(tag, text);
+                switch (state) {
+                    case ParserScanningToRecord -> {
+                        if (event == XMLStreamConstants.START_ELEMENT
+                                && reader.getLocalName().equals("record")) {
+                            fieldMap.clear();
+                            stackFrames.clear();
+                            logException = null;
+                            state = ParserState.ParserLoadingFields;
                         }
-                    } else if (event == XMLStreamConstants.END_ELEMENT
-                            && reader.getLocalName().equals("record")) {
-                        return new LogRecord(
-                                fieldMap.get("timestamp"),
-                                parseLong(fieldMap.get("sequence")),
-                                fieldMap.get("loggerClassName"),
-                                fieldMap.get("loggerName"),
-                                fieldMap.get("level"),
-                                fieldMap.get("message"),
-                                fieldMap.get("threadName"),
-                                parseLong(fieldMap.get("threadId")),
-                                fieldMap.get("hostName"),
-                                fieldMap.get("processName"),
-                                parseLong(fieldMap.get("processId")),
-                                logException
-                        );
                     }
-                }
 
-                case ParserLoadingException -> {
-                    if (event == XMLStreamConstants.START_ELEMENT) {
-                        String tag = reader.getLocalName();
-                        switch (tag) {
-                            case "exceptionType" -> {
-                                exceptionType = reader.getElementText();
+                    case ParserLoadingFields -> {
+                        if (event == XMLStreamConstants.START_ELEMENT) {
+                            String tag = reader.getLocalName();
+                            if (tag.equals("exception")) {
+                                state = ParserState.ParserLoadingException;
+                            } else {
+                                String text = reader.getElementText();
+                                fieldMap.put(tag, text);
                             }
-                            case "message" -> {
-                                exceptionMessage = reader.getElementText();
-                            }
-                            case "frames" -> {
-                                state = ParserState.ParserLoadingFrames;
-                            }
-                            case "causedBy" -> {
-                                LogException inner = parseNestedException(reader);
-                                logException = new LogException(exceptionType, exceptionMessage, new ArrayList<>(stackFrames), inner);
-                                state = ParserState.ParserLoadingFields;
-                            }
+                        } else if (event == XMLStreamConstants.END_ELEMENT
+                                && reader.getLocalName().equals("record")) {
+                            return new LogRecord(
+                                    fieldMap.get("timestamp"),
+                                    parseLong(fieldMap.get("sequence")),
+                                    fieldMap.get("loggerClassName"),
+                                    fieldMap.get("loggerName"),
+                                    fieldMap.get("level"),
+                                    fieldMap.get("message"),
+                                    fieldMap.get("threadName"),
+                                    parseLong(fieldMap.get("threadId")),
+                                    fieldMap.get("hostName"),
+                                    fieldMap.get("processName"),
+                                    parseLong(fieldMap.get("processId")),
+                                    logException
+                            );
                         }
-                    } else if (event == XMLStreamConstants.END_ELEMENT
-                            && reader.getLocalName().equals("exception")) {
-                        if (logException == null) {
-                            logException = new LogException(exceptionType, exceptionMessage, new ArrayList<>(stackFrames), null);
-                        }
-                        state = ParserState.ParserLoadingFields;
                     }
-                }
 
-                case ParserLoadingFrames -> {
-                    if (event == XMLStreamConstants.START_ELEMENT
-                            && reader.getLocalName().equals("frame")) {
-                        resetFrameFields();
-                        state = ParserState.ParserLoadingFrame;
-                    } else if (event == XMLStreamConstants.END_ELEMENT
-                            && reader.getLocalName().equals("frames")) {
-                        state = ParserState.ParserLoadingException;
-                    }
-                }
-
-                case ParserLoadingFrame -> {
-                    if (event == XMLStreamConstants.START_ELEMENT) {
-                        switch (reader.getLocalName()) {
-                            case "class" ->
-                                frameClass = reader.getElementText();
-                            case "method" ->
-                                frameMethod = reader.getElementText();
-                            case "line" -> {
-                                try {
-                                    frameLine = Integer.parseInt(reader.getElementText());
-                                } catch (NumberFormatException e) {                                    
-                                    frameLine = -1;
+                    case ParserLoadingException -> {
+                        if (event == XMLStreamConstants.START_ELEMENT) {
+                            String tag = reader.getLocalName();
+                            switch (tag) {
+                                case "exceptionType" -> {
+                                    exceptionType = reader.getElementText();
+                                }
+                                case "message" -> {
+                                    exceptionMessage = reader.getElementText();
+                                }
+                                case "frames" -> {
+                                    state = ParserState.ParserLoadingFrames;
+                                }
+                                case "causedBy" -> {
+                                    LogException inner = parseNestedException(reader);
+                                    logException = new LogException(exceptionType, exceptionMessage, new ArrayList<>(stackFrames), inner);
+                                    state = ParserState.ParserLoadingFields;
                                 }
                             }
+                        } else if (event == XMLStreamConstants.END_ELEMENT
+                                && reader.getLocalName().equals("exception")) {
+                            if (logException == null) {
+                                logException = new LogException(exceptionType, exceptionMessage, new ArrayList<>(stackFrames), null);
+                            }
+                            state = ParserState.ParserLoadingFields;
                         }
-                    } else if (event == XMLStreamConstants.END_ELEMENT
-                            && reader.getLocalName().equals("frame")) {
-                        stackFrames.add(new StackFrame(frameClass, frameMethod, frameLine));
-                        resetFrameFields();
-                        state = ParserState.ParserLoadingFrames;
+                    }
+
+                    case ParserLoadingFrames -> {
+                        if (event == XMLStreamConstants.START_ELEMENT
+                                && reader.getLocalName().equals("frame")) {
+                            resetFrameFields();
+                            state = ParserState.ParserLoadingFrame;
+                        } else if (event == XMLStreamConstants.END_ELEMENT
+                                && reader.getLocalName().equals("frames")) {
+                            state = ParserState.ParserLoadingException;
+                        }
+                    }
+
+                    case ParserLoadingFrame -> {
+                        if (event == XMLStreamConstants.START_ELEMENT) {
+                            switch (reader.getLocalName()) {
+                                case "class" ->
+                                    frameClass = reader.getElementText();
+                                case "method" ->
+                                    frameMethod = reader.getElementText();
+                                case "line" -> {
+                                    try {
+                                        frameLine = Integer.parseInt(reader.getElementText());
+                                    } catch (NumberFormatException e) {                                    
+                                        frameLine = -1;
+                                    }
+                                }
+                            }
+                        } else if (event == XMLStreamConstants.END_ELEMENT
+                                && reader.getLocalName().equals("frame")) {
+                            stackFrames.add(new StackFrame(frameClass, frameMethod, frameLine));
+                            resetFrameFields();
+                            state = ParserState.ParserLoadingFrames;
+                        }
                     }
                 }
             }
+        } catch(XMLStreamException ex) {
+            throw new LogRecordXmlParserException("XML parse failure", ex);
         }
-        throw new XMLStreamException("XML log record end never found.");
+        throw new LogRecordXmlParserException("XML log record end never found.");
     }
 
     private static Long parseLong(String str) {

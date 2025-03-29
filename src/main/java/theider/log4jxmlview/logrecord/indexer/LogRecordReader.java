@@ -8,9 +8,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
-import javax.xml.stream.XMLStreamException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import theider.log4jxmlview.logrecord.xmlparser.LogRecordXmlParserException;
 
 public class LogRecordReader {
 
@@ -40,7 +40,7 @@ public class LogRecordReader {
         return offsetIndex.getRecordCount();
     }
 
-    public LogRecord readRecordAt(int recordIndex) throws LogRecordIndexException {
+    public LogRecord readRecordAt(int recordIndex) throws LogRecordIndexException, LogRecordXmlParserException {
         if (recordIndex < 0 || recordIndex >= offsetIndex.getRecordCount()) {
             throw new LogRecordIndexException("Log record index out of bounds:" + recordIndex);
         }
@@ -59,7 +59,7 @@ public class LogRecordReader {
             InputStream in = new ByteArrayInputStream(xmlBytes);
             LogRecord record = logRecordXmlParser.fromInputStream(in);            
             return record;
-        } catch (IOException | XMLStreamException ex) {
+        } catch (IOException ex) {
             String xmlText = xmlBytes == null ? null : new String(xmlBytes);
             //throw new LogRecordIndexException("Error reading log record at index " + recordIndex, ex);
             throw new LogRecordIndexException("Error reading log record at index " + recordIndex + " data:[" + xmlText + "]", ex);

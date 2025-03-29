@@ -1,5 +1,6 @@
 package theider.log4jxmlview.app;
 
+import java.util.logging.Level;
 import theider.log4jxmlview.logrecord.indexer.LogRecordIndexException;
 import theider.log4jxmlview.logrecord.indexer.LogRecordReader;
 import theider.log4jxmlview.logrecord.model.LogRecord;
@@ -7,6 +8,7 @@ import theider.log4jxmlview.logrecord.model.LogRecord;
 import javax.swing.table.AbstractTableModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import theider.log4jxmlview.logrecord.xmlparser.LogRecordXmlParserException;
 
 public class LogViewerTableModel extends AbstractTableModel {
 
@@ -54,8 +56,11 @@ public class LogViewerTableModel extends AbstractTableModel {
                 case 8 -> (logRecord.exception() != null) ? logRecord.exception().exceptionType() : "";
                 default -> "";
             };
-        } catch (LogRecordIndexException e) {
-            logger.error("Error reading record at index " + rowIndex, e);
+        } catch (LogRecordIndexException ex) {
+            logger.error("Error reading record at index " + rowIndex, ex);
+            return "[Error]";
+        } catch (LogRecordXmlParserException ex) {
+            logger.error("XML parse error " + rowIndex, ex);
             return "[Error]";
         }
     }

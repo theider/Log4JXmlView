@@ -1,5 +1,7 @@
-package theider.log4jxmlview.logrecord;
+package theider.log4jxmlview.logrecord.indexer;
 
+import theider.log4jxmlview.logrecord.streams.CountingInputStream;
+import theider.log4jxmlview.logrecord.indexer.ILogRecordIndexProgressListener;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

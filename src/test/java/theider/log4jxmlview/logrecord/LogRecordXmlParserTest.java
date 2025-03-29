@@ -1,5 +1,9 @@
 package theider.log4jxmlview.logrecord;
 
+import theider.log4jxmlview.logrecord.model.StackFrame;
+import theider.log4jxmlview.logrecord.model.LogException;
+import theider.log4jxmlview.logrecord.model.LogRecord;
+import theider.log4jxmlview.logrecord.xmlparser.LogRecordXmlParser;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;

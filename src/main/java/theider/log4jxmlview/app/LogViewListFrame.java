@@ -1,7 +1,7 @@
 package theider.log4jxmlview.app;
 
 import javax.swing.JInternalFrame;
-import theider.log4jxmlview.logrecord.LogRecordReader;
+import theider.log4jxmlview.logrecord.indexer.LogRecordReader;
 
 public class LogViewListFrame extends JInternalFrame {
     

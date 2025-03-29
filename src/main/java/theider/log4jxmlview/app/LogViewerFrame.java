@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.io.File;
-import theider.log4jxmlview.logrecord.LogRecordReader;
+import theider.log4jxmlview.logrecord.indexer.LogRecordReader;
 
 public class LogViewerFrame extends JFrame {
 

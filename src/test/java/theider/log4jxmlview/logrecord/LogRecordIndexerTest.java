@@ -1,5 +1,7 @@
 package theider.log4jxmlview.logrecord;
 
+import theider.log4jxmlview.logrecord.indexer.LogRecordOffsetIndex;
+import theider.log4jxmlview.logrecord.indexer.LogRecordIndexer;
 import org.junit.jupiter.api.Test;
 
 import javax.xml.stream.XMLInputFactory;
@@ -36,7 +38,7 @@ public class LogRecordIndexerTest {
             LogRecordOffsetIndex recordIndex = indexer.indexRecords(inputStream, 
                     (read, total) -> {
                         double percent = (read * 100.0) / total;
-                        logger.debug("Progress: {}%", String.format("%.2f", percent));
+                        logger.trace("Progress: {}%", String.format("%.2f", percent));
                     }, fileSizeBytes);    
             
             assertFalse(recordIndex.getRecordCount() == 0, "No <record> entries found in the XML");

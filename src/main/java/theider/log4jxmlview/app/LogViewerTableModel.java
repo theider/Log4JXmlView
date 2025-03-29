@@ -1,6 +1,8 @@
 package theider.log4jxmlview.app;
 
-import theider.log4jxmlview.logrecord.*;
+import theider.log4jxmlview.logrecord.indexer.LogRecordIndexException;
+import theider.log4jxmlview.logrecord.indexer.LogRecordReader;
+import theider.log4jxmlview.logrecord.model.LogRecord;
 
 import javax.swing.table.AbstractTableModel;
 import org.slf4j.Logger;

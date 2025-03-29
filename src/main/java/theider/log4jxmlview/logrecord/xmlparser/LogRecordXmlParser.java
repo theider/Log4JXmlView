@@ -1,4 +1,4 @@
-package theider.log4jxmlview.logrecord;
+package theider.log4jxmlview.logrecord.xmlparser;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -10,6 +10,9 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import theider.log4jxmlview.logrecord.model.LogException;
+import theider.log4jxmlview.logrecord.model.LogRecord;
+import theider.log4jxmlview.logrecord.model.StackFrame;
 
 public class LogRecordXmlParser {
 

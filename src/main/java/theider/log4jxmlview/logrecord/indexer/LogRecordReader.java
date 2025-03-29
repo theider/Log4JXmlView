@@ -1,5 +1,7 @@
-package theider.log4jxmlview.logrecord;
+package theider.log4jxmlview.logrecord.indexer;
 
+import theider.log4jxmlview.logrecord.model.LogRecord;
+import theider.log4jxmlview.logrecord.xmlparser.LogRecordXmlParser;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;

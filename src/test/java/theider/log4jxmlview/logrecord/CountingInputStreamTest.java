@@ -1,5 +1,6 @@
 package theider.log4jxmlview.logrecord;
 
+import theider.log4jxmlview.logrecord.streams.CountingInputStream;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;

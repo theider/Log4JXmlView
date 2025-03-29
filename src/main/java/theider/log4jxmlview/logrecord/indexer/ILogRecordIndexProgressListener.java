@@ -1,4 +1,4 @@
-package theider.log4jxmlview.logrecord;
+package theider.log4jxmlview.logrecord.indexer;
 
 @FunctionalInterface
 public interface ILogRecordIndexProgressListener {

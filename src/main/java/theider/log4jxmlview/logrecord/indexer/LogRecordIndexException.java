@@ -1,4 +1,4 @@
-package theider.log4jxmlview.logrecord;
+package theider.log4jxmlview.logrecord.indexer;
 
 public class LogRecordIndexException extends Exception {
 

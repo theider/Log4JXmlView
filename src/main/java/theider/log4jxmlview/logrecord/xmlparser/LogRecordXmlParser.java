@@ -1,6 +1,7 @@
 package theider.log4jxmlview.logrecord.xmlparser;
 
 import java.io.InputStream;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +67,7 @@ public class LogRecordXmlParser {
                         } else if (event == XMLStreamConstants.END_ELEMENT
                                 && reader.getLocalName().equals("record")) {
                             return new LogRecord(
-                                    fieldMap.get("timestamp"),
+                                    parseInstant(fieldMap.get("timestamp")),
                                     parseLong(fieldMap.get("sequence")),
                                     fieldMap.get("loggerClassName"),
                                     fieldMap.get("loggerName"),
@@ -153,6 +154,10 @@ public class LogRecordXmlParser {
 
     private static Long parseLong(String str) {
         return (str != null && !str.isEmpty()) ? Long.valueOf(str) : null;
+    }
+    
+    private static Instant parseInstant(String str) {
+        return (str != null && !str.isEmpty()) ? Instant.parse(str) : null;
     }
 
     private enum ParserState {

@@ -12,9 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import theider.log4jxmlview.logrecord.xmlparser.LogRecordXmlParserException;
 
-public class LogRecordReader {
+public class LogRecordIndex {
 
-    private static final Logger logger = LoggerFactory.getLogger(LogRecordReader.class);
+    private static final Logger logger = LoggerFactory.getLogger(LogRecordIndex.class);
     
     private final File sourceLogFile;
 
@@ -22,7 +22,7 @@ public class LogRecordReader {
 
     private final LogRecordXmlParser logRecordXmlParser;
 
-    public LogRecordReader(File sourceLogFile, ILogRecordIndexProgressListener progressListener, long fileSizeBytes) throws IOException {
+    public LogRecordIndex(File sourceLogFile, ILogRecordIndexProgressListener progressListener, long fileSizeBytes) throws IOException {
         this.sourceLogFile = sourceLogFile;
         try (InputStream in = new FileInputStream(sourceLogFile)) {
             logger.debug("create log record reader {} {}", sourceLogFile.getAbsolutePath(), fileSizeBytes);

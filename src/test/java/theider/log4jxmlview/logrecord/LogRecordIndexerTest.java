@@ -48,7 +48,7 @@ public class LogRecordIndexerTest {
                 for (int i = 0; i < recordIndex.getRecordCount(); i++) {
                     long recordOffset = recordIndex.getRecordOffset(i);
                     long recordLength = recordIndex.getRecordSize(i);
-                    logger.debug("Record {}: offset={}, length={}", i, recordOffset, recordLength);
+                    logger.trace("Record {}: offset={}, length={}", i, recordOffset, recordLength);
 
                     assertTrue(recordOffset >= 0, "Start offset should be non-negative");
                     assertTrue(recordLength > 0, "Record length should be positive");

@@ -8,15 +8,15 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.io.File;
-import theider.log4jxmlview.logrecord.indexer.LogRecordReader;
+import theider.log4jxmlview.logrecord.indexer.LogRecordIndex;
 
-public class LogViewerFrame extends JFrame {
+public class LogViewerAppFrame extends JFrame {
 
-    private static final Logger logger = LoggerFactory.getLogger(LogViewerFrame.class);
+    private static final Logger logger = LoggerFactory.getLogger(LogViewerAppFrame.class);
 
     private final JDesktopPane desktopPane = new JDesktopPane();
 
-    public LogViewerFrame() {
+    public LogViewerAppFrame() {
         setTitle("Log4j XML Viewer");
         setSize(1200, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,12 +71,12 @@ public class LogViewerFrame extends JFrame {
         progressDialog.setLocationRelativeTo(this);
 
         // Use a SwingWorker so the UI doesn't block
-        SwingWorker<LogRecordReader, Integer> worker = new SwingWorker<>() {
+        SwingWorker<LogRecordIndex, Integer> worker = new SwingWorker<>() {
             @Override
-            protected LogRecordReader doInBackground() throws Exception {
+            protected LogRecordIndex doInBackground() throws Exception {
                 long fileSize = file.length();
                 logger.debug("start record index in backgroup len=" + fileSize);
-                return new LogRecordReader(file, (bytesRead, totalBytes) -> {
+                return new LogRecordIndex(file, (bytesRead, totalBytes) -> {
                     int percent = (int) ((bytesRead * 100) / totalBytes);
                     publish(percent);
                 }, fileSize);
@@ -92,9 +92,9 @@ public class LogViewerFrame extends JFrame {
             protected void done() {
                 progressDialog.dispose(); // close progress dialog
                 try {
-                    LogRecordReader reader = get();
+                    LogRecordIndex reader = get();
                     LogViewerTableModel tableModel = new LogViewerTableModel(reader);
-                    JTable table = new JTable(tableModel);
+                    JTable table = new LogRecordListTable(tableModel);                    
                     JScrollPane scrollPane = new JScrollPane(table);
 
                     LogViewListFrame internalFrame = new LogViewListFrame(reader);
@@ -105,10 +105,14 @@ public class LogViewerFrame extends JFrame {
 
                     desktopPane.add(internalFrame);
                     internalFrame.setSelected(true);
+
+                    LogFileStatusFrame statusFrame = new LogFileStatusFrame("server-log.xml", reader);
+                    desktopPane.add(statusFrame);    
+                    statusFrame.setSize(700, 500);                
+                    statusFrame.setVisible(true);
                 } catch (Exception ex) {
                     logger.error("Failed to load log file: {}", ex.getMessage(), ex);
-                    JOptionPane.showMessageDialog(
-                            LogViewerFrame.this,
+                    JOptionPane.showMessageDialog(LogViewerAppFrame.this,
                             "Failed to load XML file:\n" + ex.getMessage(),
                             "Load Error",
                             JOptionPane.ERROR_MESSAGE

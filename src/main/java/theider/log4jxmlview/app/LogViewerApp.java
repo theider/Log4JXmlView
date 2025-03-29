@@ -21,7 +21,7 @@ public class LogViewerApp {
             if (GraphicsEnvironment.isHeadless()) {
                 System.err.println("Cannot launch UI: running in headless mode");
             } else {
-                SwingUtilities.invokeLater(() -> new LogViewerFrame().setVisible(true));
+                SwingUtilities.invokeLater(() -> new LogViewerAppFrame().setVisible(true));
             }
 
         };

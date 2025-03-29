@@ -59,6 +59,12 @@
             <scope>test</scope>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.5.5</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <build>

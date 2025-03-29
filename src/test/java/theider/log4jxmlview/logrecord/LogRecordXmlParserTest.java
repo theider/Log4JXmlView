@@ -10,6 +10,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.URL;
 import java.nio.file.Files;
+import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,7 +30,7 @@ public class LogRecordXmlParserTest {
             LogRecord record = parser.fromInputStream(inputStream);
 
             assertNotNull(record);
-            assertEquals("2025-03-21T16:03:12.774Z", record.timestamp());
+            assertEquals(Instant.parse("2025-03-21T16:03:12.774Z"), record.timestamp());
             assertEquals("ERROR", record.level());
             assertEquals("Exception while dispatching incoming RPC call", record.message());
             assertEquals("default task-1", record.threadName());

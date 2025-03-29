@@ -20,8 +20,6 @@ public class LogRecordIndexerTest {
 
     private static final Logger logger = LoggerFactory.getLogger(LogRecordIndexerTest.class);
 
-    
-    
     @Test
     public void testIndexLogRecords() throws Exception {
         URL resource = getClass().getClassLoader().getResource("logdatawithexception.xml");

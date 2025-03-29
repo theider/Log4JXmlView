@@ -11,9 +11,20 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-public class LogRecordFactory {
+public class LogRecordXmlParser {
 
+    private String frameClass;
+    private String frameMethod;
+    private int frameLine;
+    
+    private void resetFrameFields() {
+        frameClass = null;
+        frameMethod = null;
+        frameLine = -1;
+    }
+    
     public LogRecord fromInputStream(InputStream xmlStream) throws XMLStreamException {
+
         XMLInputFactory factory = XMLInputFactory.newInstance();
         XMLStreamReader reader = factory.createXMLStreamReader(xmlStream, "UTF-8");
 
@@ -23,8 +34,7 @@ public class LogRecordFactory {
         LogException logException = null;
 
         String exceptionType = null, exceptionMessage = null;
-        String frameClass = null, frameMethod = null;
-        int frameLine = -1;
+        resetFrameFields();
 
         while (reader.hasNext()) {
             int event = reader.next();
@@ -34,6 +44,7 @@ public class LogRecordFactory {
                     if (event == XMLStreamConstants.START_ELEMENT
                             && reader.getLocalName().equals("record")) {
                         fieldMap.clear();
+                        stackFrames.clear();
                         logException = null;
                         state = ParserState.ParserLoadingFields;
                     }
@@ -45,7 +56,8 @@ public class LogRecordFactory {
                         if (tag.equals("exception")) {
                             state = ParserState.ParserLoadingException;
                         } else {
-                            fieldMap.put(tag, reader.getElementText());
+                            String text = reader.getElementText();
+                            fieldMap.put(tag, text);
                         }
                     } else if (event == XMLStreamConstants.END_ELEMENT
                             && reader.getLocalName().equals("record")) {
@@ -70,20 +82,23 @@ public class LogRecordFactory {
                     if (event == XMLStreamConstants.START_ELEMENT) {
                         String tag = reader.getLocalName();
                         switch (tag) {
-                            case "exceptionType" ->
+                            case "exceptionType" -> {
                                 exceptionType = reader.getElementText();
-                            case "message" ->
+                            }
+                            case "message" -> {
                                 exceptionMessage = reader.getElementText();
-                            case "frames" ->
+                            }
+                            case "frames" -> {
                                 state = ParserState.ParserLoadingFrames;
+                            }
                             case "causedBy" -> {
-                                // Recursively parse inner <exception>
                                 LogException inner = parseNestedException(reader);
                                 logException = new LogException(exceptionType, exceptionMessage, new ArrayList<>(stackFrames), inner);
                                 state = ParserState.ParserLoadingFields;
                             }
                         }
-                    } else if (event == XMLStreamConstants.END_ELEMENT && reader.getLocalName().equals("exception")) {
+                    } else if (event == XMLStreamConstants.END_ELEMENT
+                            && reader.getLocalName().equals("exception")) {
                         if (logException == null) {
                             logException = new LogException(exceptionType, exceptionMessage, new ArrayList<>(stackFrames), null);
                         }
@@ -92,8 +107,13 @@ public class LogRecordFactory {
                 }
 
                 case ParserLoadingFrames -> {
-                    if (event == XMLStreamConstants.START_ELEMENT && reader.getLocalName().equals("frame")) {
+                    if (event == XMLStreamConstants.START_ELEMENT
+                            && reader.getLocalName().equals("frame")) {
+                        resetFrameFields();
                         state = ParserState.ParserLoadingFrame;
+                    } else if (event == XMLStreamConstants.END_ELEMENT
+                            && reader.getLocalName().equals("frames")) {
+                        state = ParserState.ParserLoadingException;
                     }
                 }
 
@@ -104,19 +124,24 @@ public class LogRecordFactory {
                                 frameClass = reader.getElementText();
                             case "method" ->
                                 frameMethod = reader.getElementText();
-                            case "line" ->
-                                frameLine = Integer.parseInt(reader.getElementText());
+                            case "line" -> {
+                                try {
+                                    frameLine = Integer.parseInt(reader.getElementText());
+                                } catch (NumberFormatException e) {                                    
+                                    frameLine = -1;
+                                }
+                            }
                         }
                     } else if (event == XMLStreamConstants.END_ELEMENT
                             && reader.getLocalName().equals("frame")) {
                         stackFrames.add(new StackFrame(frameClass, frameMethod, frameLine));
+                        resetFrameFields();
                         state = ParserState.ParserLoadingFrames;
                     }
                 }
             }
         }
-
-        throw new XMLStreamException("No <record> found in stream.");
+        throw new XMLStreamException("XML log record end never found.");
     }
 
     private static Long parseLong(String str) {

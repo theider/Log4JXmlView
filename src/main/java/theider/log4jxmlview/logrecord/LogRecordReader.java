@@ -18,7 +18,7 @@ public class LogRecordReader {
 
     private final LogRecordOffsetIndex offsetIndex;
 
-    private final LogRecordFactory factory;
+    private final LogRecordXmlParser logRecordXmlParser;
 
     public LogRecordReader(File sourceLogFile, ILogRecordIndexProgressListener progressListener, long fileSizeBytes) throws IOException {
         this.sourceLogFile = sourceLogFile;
@@ -27,7 +27,7 @@ public class LogRecordReader {
             LogRecordIndexer indexer = new LogRecordIndexer();
             this.offsetIndex = indexer.indexRecords(in, progressListener, fileSizeBytes);
         }
-        this.factory = new LogRecordFactory();
+        this.logRecordXmlParser = new LogRecordXmlParser();
     }
 
     public String getFilename() {
@@ -55,7 +55,7 @@ public class LogRecordReader {
             raf.seek(offset);
             raf.readFully(xmlBytes);
             InputStream in = new ByteArrayInputStream(xmlBytes);
-            LogRecord record = factory.fromInputStream(in);            
+            LogRecord record = logRecordXmlParser.fromInputStream(in);            
             return record;
         } catch (IOException | XMLStreamException ex) {
             String xmlText = xmlBytes == null ? null : new String(xmlBytes);
